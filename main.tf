@@ -44,11 +44,12 @@ resource "aws_instance" "blog" {
     Name = "Learning Terraform"
   }
 }
-
+ 
 module "alb" {
   source = "terraform-aws-modules/alb/aws"
 
   name               = "blog-alb"
+  load_balancer_type = "application"
   vpc_id             = module.blog_vpc.vpc_id
   subnets            = module.blog_vpc.public_subnets
   security_groups    = [module.blog_sg.security_group_id]
@@ -82,6 +83,9 @@ module "alb" {
       port     = 80
       protocol = "HTTP"
       target_id = 0
+       forward = {
+        target_group_key = "ex-instance"
+      }
     }
   }
 
