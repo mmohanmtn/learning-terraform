@@ -68,7 +68,7 @@ module "blog_alb" {
     }
   ]
  
-  http-tcp-listeners = [
+  http_tcp_listeners = [
     {
       port     = 80
       protocol = "HTTP"
